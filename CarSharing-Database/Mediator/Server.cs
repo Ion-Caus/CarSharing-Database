@@ -8,7 +8,7 @@ namespace CarSharing_Database.Mediator
     public class Server
     {
         public int Port { get; set; } = 2910;
-        public string Hostname { get; set; } = "localhost";
+        public string Hostname { get; set; } = "127.0.0.1";
 
         private bool _isRunning;
         private readonly TcpListener _listener;
@@ -18,7 +18,6 @@ namespace CarSharing_Database.Mediator
             var ipAddress = IPAddress.Parse(Hostname);
             _listener = new TcpListener(ipAddress, Port);
             _isRunning = false;
-            
         }
 
         public void Run()

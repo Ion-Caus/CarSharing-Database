@@ -13,14 +13,15 @@ namespace CarSharing_Database.Mediator
 {
     public class ClientHandler
     {
-        private TcpClient _client;
-        private NetworkStream _stream;
-        private IVehicleDao VehicleDao;
+        private readonly TcpClient _client;
+        private readonly NetworkStream _stream;
+        private readonly IVehicleDao _vehicleDao;
 
         public ClientHandler(TcpClient client)
         {
             _client = client;
             _stream = _client.GetStream();
+            _vehicleDao = VehicleDao.Instance;
         }
 
         public void Run()
@@ -74,12 +75,12 @@ namespace CarSharing_Database.Mediator
             if (!request.ObjType.Equals("FilterParam"))
             {
                 // read by licenseNo
-                return VehicleDao.Read(request.ObjJson);
+                return _vehicleDao.Read(request.ObjJson);
             }
 
             FilterParam param = JsonSerializer.Deserialize<FilterParam>(request.ObjJson);
             Debug.Assert(param != null);
-            return VehicleDao.Read(param.Location, param.DateFrom, param.DateTo);
+            return _vehicleDao.Read(param.Location, param.DateFrom, param.DateTo);
         }
 
 

@@ -12,7 +12,7 @@ namespace CarSharing_Database.ModelData
         public int ManufactureYear { get; set; }
         public double Mileage { get; set; }
         
-        public int OwnerCpr { get; set; }
+        public string OwnerCpr { get; set; }
     }
     
     public static class VehicleTransmission
@@ -29,7 +29,7 @@ namespace CarSharing_Database.ModelData
 
     public static class VehicleFuelType
     {
-        public const string Electric = "Electic";
+        public const string Electric = "Electric";
         public const string Diesel = "Diesel";
         public const string Petrol = "Petrol";
     }
