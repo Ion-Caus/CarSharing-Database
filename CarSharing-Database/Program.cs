@@ -1,4 +1,5 @@
 ﻿using System;
+using CarSharing_Database.Mediator;
 
 namespace CarSharing_Database
 {
@@ -6,7 +7,7 @@ namespace CarSharing_Database
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            new Server().Run();
         }
     }
 }
