@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CarSharing_Database.ModelData;
 using CarSharing_Database.Persistence;
-using Microsoft.VisualBasic;
 
 namespace CarSharing_Database.Dao
 {
@@ -11,25 +10,14 @@ namespace CarSharing_Database.Dao
     {
         private static VehicleDao _instance;
 
-        public static VehicleDao Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new VehicleDao();
-                }
-                return _instance;
-            }
-        }
-        
-        private FileContext _fileContext;
-        private IList<Vehicle> _vehicles;
+        public static VehicleDao Instance => _instance ??= new VehicleDao();
+
+        private readonly IList<Vehicle> _vehicles;
 
         private VehicleDao()
         {
-            _fileContext = FileContext.Instance;
-            _vehicles = _fileContext.Vehicles;
+            var fileContext = FileContext.Instance;
+            _vehicles = fileContext.Vehicles;
         }
         
         public Vehicle Create(Vehicle vehicle)
@@ -41,17 +29,7 @@ namespace CarSharing_Database.Dao
         {
             return _vehicles.First(vehicle => vehicle.LicenseNo.Equals(licenseNo));
         }
-
-        public Vehicle Read(string location, DateTime dateFrom, DateTime dateTo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Vehicle Read(string location, DateInterval dateInterval)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public bool Update(Vehicle vehicle)
         {
             throw new NotImplementedException();

@@ -15,13 +15,17 @@ namespace CarSharing_Database.Mediator
     {
         private readonly TcpClient _client;
         private readonly NetworkStream _stream;
+        
         private readonly IVehicleDao _vehicleDao;
+        private readonly IListingDao _listingDao;
 
         public ClientHandler(TcpClient client)
         {
             _client = client;
             _stream = _client.GetStream();
+            
             _vehicleDao = VehicleDao.Instance;
+            _listingDao = ListingDao.Instance;
         }
 
         public void Run()
@@ -50,6 +54,15 @@ namespace CarSharing_Database.Mediator
                                 ObjJson = JsonSerializer.Serialize(vehicle)
                             };
                             break;
+                        case "GetListing":
+                            Listing listing = GetListing(request);
+                            reply = new RequestReply
+                            {
+                                Action = "GetListing",
+                                ObjType = "Listing",
+                                ObjJson = JsonSerializer.Serialize(listing)
+                            };
+                            break;
                         case "AddVehicle":
                             break;
                     }
@@ -61,6 +74,7 @@ namespace CarSharing_Database.Mediator
                 }
                 catch (Exception e) when( e is ObjectDisposedException | e is IOException | e is JsonException)
                 {
+                    Console.WriteLine(e.Message);
                     Console.WriteLine(
                         $"Client {((IPEndPoint) _client.Client.RemoteEndPoint)?.Address} disconnected...");
                     Close();
@@ -72,15 +86,18 @@ namespace CarSharing_Database.Mediator
 
         private Vehicle GetVehicle(RequestReply request)
         {
+            return request.ObjType.Equals("String") ? _vehicleDao.Read(request.ObjJson) : null;
+        }
+
+        private Listing GetListing(RequestReply request)
+        {
             if (!request.ObjType.Equals("FilterParam"))
             {
-                // read by licenseNo
-                return _vehicleDao.Read(request.ObjJson);
+                return null;
             }
-
             FilterParam param = JsonSerializer.Deserialize<FilterParam>(request.ObjJson);
             Debug.Assert(param != null);
-            return _vehicleDao.Read(param.Location, param.DateFrom, param.DateTo);
+            return _listingDao.Read(param.Location, param.DateFrom, param.DateTo);
         }
 
 

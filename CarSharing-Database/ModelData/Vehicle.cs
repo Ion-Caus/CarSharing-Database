@@ -1,3 +1,5 @@
+using System;
+
 namespace CarSharing_Database.ModelData
 {
     public class Vehicle
@@ -25,6 +27,10 @@ namespace CarSharing_Database.ModelData
     {
         public const string Van = "Van";
         public const string Suv = "SUV";
+        public const string Sedan = "Sedan";
+        public const string Coupe = "Coupe";
+        public const string Hatchback = "Hatchback";
+        public const string PickupTruck = "Pickup Truck";
     }
 
     public static class VehicleFuelType
