@@ -84,7 +84,7 @@ namespace CarSharing_Database.Persistence
             {
                 new()
                 {
-                    VehicleLicenseNo = Vehicles[0].LicenseNo,
+                    Vehicle = Vehicles[0],
                     ListedDate = new DateTime(2021, 10, 10, 8, 45, 00, DateTimeKind.Utc),
                     Location = "Aarhus",
                     Price = 350.5m,
@@ -93,7 +93,7 @@ namespace CarSharing_Database.Persistence
                 },
                 new()
                 {
-                    VehicleLicenseNo = Vehicles[1].LicenseNo,
+                    Vehicle = Vehicles[1],
                     ListedDate = new DateTime(2021, 10, 24, 21, 15, 00, DateTimeKind.Utc),
                     Location = "Horsens",
                     Price = 200.8m,
@@ -102,7 +102,7 @@ namespace CarSharing_Database.Persistence
                 },
                 new()
                 {
-                    VehicleLicenseNo = Vehicles[2].LicenseNo,
+                    Vehicle = Vehicles[2],
                     ListedDate = new DateTime(2021, 10, 15, 21, 15, 00, DateTimeKind.Utc),
                     Location = "Aarhus",
                     Price = 500m,

@@ -11,7 +11,7 @@ namespace CarSharing_Database.ModelData
         public DateTime DateTo { get; set; }
         
         //TODO 24.10 by Ion - if change to Vehicle then use Newtonsoft.Json
-        public string VehicleLicenseNo { get; set; }
+        public Vehicle Vehicle { get; set; }
         
     }
 }

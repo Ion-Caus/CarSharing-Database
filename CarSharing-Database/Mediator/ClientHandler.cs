@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -37,10 +38,11 @@ namespace CarSharing_Database.Mediator
                     // receive request from Client
                     byte[] dataFromClient = new byte[2048];
                     int bytesRead = _stream.Read(dataFromClient, 0, dataFromClient.Length);
+                    if (bytesRead == 0) { break; }
                     string requestJson = Encoding.ASCII.GetString(dataFromClient, 0, bytesRead);
                     RequestReply request = JsonSerializer.Deserialize<RequestReply>(requestJson);
                     RequestReply reply = null;
-                    
+
                     // analyze the request
                     // create the reply
                     switch (request?.Action)
@@ -55,7 +57,7 @@ namespace CarSharing_Database.Mediator
                             };
                             break;
                         case "GetListing":
-                            Listing listing = GetListing(request);
+                            IList<Listing> listing = GetListing(request);
                             reply = new RequestReply
                             {
                                 Action = "GetListing",
@@ -69,19 +71,20 @@ namespace CarSharing_Database.Mediator
                     
                     // send reply to Client
                     string replyJson = JsonSerializer.Serialize(reply);
+                    
+                    Console.WriteLine(replyJson);
                     byte[] bytesToSend = Encoding.ASCII.GetBytes(replyJson);
                     _stream.Write(bytesToSend, 0, bytesToSend.Length);
                 }
                 catch (Exception e) when( e is ObjectDisposedException | e is IOException | e is JsonException)
                 {
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine(
-                        $"Client {((IPEndPoint) _client.Client.RemoteEndPoint)?.Address} disconnected...");
-                    Close();
+                    Console.WriteLine(e.StackTrace);
                     break;
                 }
-                
             }
+            Console.WriteLine(
+                $"Client {((IPEndPoint) _client.Client.RemoteEndPoint)?.Address} disconnected...");
+            Close();
         }
 
         private Vehicle GetVehicle(RequestReply request)
@@ -89,7 +92,7 @@ namespace CarSharing_Database.Mediator
             return request.ObjType.Equals("String") ? _vehicleDao.Read(request.ObjJson) : null;
         }
 
-        private Listing GetListing(RequestReply request)
+        private IList<Listing> GetListing(RequestReply request)
         {
             if (!request.ObjType.Equals("FilterParam"))
             {
