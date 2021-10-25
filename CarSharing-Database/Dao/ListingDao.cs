@@ -27,12 +27,12 @@ namespace CarSharing_Database.Dao
         }
 
         //TODO 24.10 by Ion return list of Listings
-        public Listing Read(string location, DateTime dateFrom, DateTime dateTo)
+        public IList<Listing> Read(string location, DateTime dateFrom, DateTime dateTo)
         {
             
-            return _listings.First(l => l.Location.Equals(location) &&
+            return _listings.Where(l => l.Location.Equals(location) &&
                                               l.DateFrom < dateFrom &&
-                                              l.DateTo > dateTo);
+                                              l.DateTo > dateTo).ToList();
         }
 
         public Listing Read(string location, DateInterval dateInterval)
