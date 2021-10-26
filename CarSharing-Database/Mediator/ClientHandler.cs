@@ -71,8 +71,6 @@ namespace CarSharing_Database.Mediator
                     
                     // send reply to Client
                     string replyJson = JsonSerializer.Serialize(reply);
-                    
-                    Console.WriteLine(replyJson);
                     byte[] bytesToSend = Encoding.ASCII.GetBytes(replyJson);
                     _stream.Write(bytesToSend, 0, bytesToSend.Length);
                 }

@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarSharing-Database", "CarSharing-Database\CarSharing-Database.csproj", "{207EAD6C-D0DA-4E0E-9674-6804AEFB4F6A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CarSharing-Database (Socket)", "CarSharing-Database (Socket)", "{28F4FD27-E35F-40AC-A089-85A782317D95}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CarSharing-Database (GraphQL)", "CarSharing-Database (GraphQL)", "{60A770CF-DF63-47E3-A423-6990553A694B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarSharing-Database-GraphQL", "CarSharing-Database-GraphQL\CarSharing-Database-GraphQL.csproj", "{5344E91E-C361-40C4-B6E2-2B4A75D3A4BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,13 @@ Global
 		{207EAD6C-D0DA-4E0E-9674-6804AEFB4F6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{207EAD6C-D0DA-4E0E-9674-6804AEFB4F6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{207EAD6C-D0DA-4E0E-9674-6804AEFB4F6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5344E91E-C361-40C4-B6E2-2B4A75D3A4BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5344E91E-C361-40C4-B6E2-2B4A75D3A4BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5344E91E-C361-40C4-B6E2-2B4A75D3A4BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5344E91E-C361-40C4-B6E2-2B4A75D3A4BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{207EAD6C-D0DA-4E0E-9674-6804AEFB4F6A} = {28F4FD27-E35F-40AC-A089-85A782317D95}
+		{5344E91E-C361-40C4-B6E2-2B4A75D3A4BF} = {60A770CF-DF63-47E3-A423-6990553A694B}
 	EndGlobalSection
 EndGlobal
