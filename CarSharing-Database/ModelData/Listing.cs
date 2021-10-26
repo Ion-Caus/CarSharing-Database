@@ -9,8 +9,6 @@ namespace CarSharing_Database.ModelData
         public string Location { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
-        
-        //TODO 24.10 by Ion - if change to Vehicle then use Newtonsoft.Json
         public Vehicle Vehicle { get; set; }
         
     }
