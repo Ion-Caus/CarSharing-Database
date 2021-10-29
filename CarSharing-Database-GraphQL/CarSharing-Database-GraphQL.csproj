@@ -5,4 +5,9 @@
         <RootNamespace>CarSharing_Database_GraphQL</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="GraphQL.Server.Ui.Voyager" Version="4.4.1" />
+      <PackageReference Include="HotChocolate.AspNetCore" Version="12.1.0-preview.1" />
+    </ItemGroup>
+
 </Project>
