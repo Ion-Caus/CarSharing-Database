@@ -46,7 +46,7 @@ namespace CarSharing_Database_GraphQL.Persistence
                     FuelType = VehicleFuelType.Electric,
                     Transmission = VehicleTransmission.Automatic,
                     Seats = 7,
-                    LicenseNo = "XZ 01 334",
+                    LicenseNo = "XZ01334",
                     ManufactureYear = 2018,
                     Mileage = 50_266,
                     OwnerCpr = "1212901212"
@@ -59,7 +59,7 @@ namespace CarSharing_Database_GraphQL.Persistence
                     FuelType = VehicleFuelType.Petrol,
                     Transmission = VehicleTransmission.Manual,
                     Seats = 5,
-                    LicenseNo = "AB 11 222",
+                    LicenseNo = "AB11222",
                     ManufactureYear = 2014,
                     Mileage = 170_335,
                     OwnerCpr = "0101018877"
@@ -72,7 +72,7 @@ namespace CarSharing_Database_GraphQL.Persistence
                     FuelType = VehicleFuelType.Diesel,
                     Transmission = VehicleTransmission.Automatic,
                     Seats = 5,
-                    LicenseNo = "MK 99 222",
+                    LicenseNo = "MK99222",
                     ManufactureYear = 2020,
                     Mileage = 10_866,
                     OwnerCpr = "2010801234"
@@ -116,14 +116,18 @@ namespace CarSharing_Database_GraphQL.Persistence
         private IList<T> ReadData<T>(string s)
         {
             using var jsonReader = File.OpenText(s);
-            return JsonSerializer.Deserialize<List<T>>(jsonReader.ReadToEnd());
+            return JsonSerializer.Deserialize<List<T>>(jsonReader.ReadToEnd(), new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
         }
 
         public void SaveChanges<T>(T toSerialize, string path)
         {
             var json = JsonSerializer.Serialize(toSerialize, new JsonSerializerOptions
             {
-                WriteIndented = true
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
             using var outputFile = new StreamWriter(path, false);
             outputFile.Write(json);

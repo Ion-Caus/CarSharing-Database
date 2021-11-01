@@ -23,7 +23,8 @@ namespace CarSharing_Database_GraphQL.Dao
 
         public Vehicle Read(string licenseNo)
         {
-            return _vehicles.First(vehicle => vehicle.LicenseNo.Equals(licenseNo));
+            return _vehicles.First(vehicle =>
+                string.Equals(vehicle.LicenseNo, licenseNo, StringComparison.OrdinalIgnoreCase));
         }
         
         public bool Update(Vehicle vehicle)

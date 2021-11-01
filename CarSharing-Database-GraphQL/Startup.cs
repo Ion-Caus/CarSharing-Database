@@ -20,8 +20,8 @@ namespace CarSharing_Database_GraphQL
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddSingleton<IVehicleDao, VehicleDao>()
-                .AddSingleton<IListingDao, ListingDao>();
+                .AddScoped<IVehicleDao, VehicleDao>()
+                .AddScoped<IListingDao, ListingDao>();
 
             services
                 .AddGraphQLServer()
