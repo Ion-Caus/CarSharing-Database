@@ -7,9 +7,7 @@ namespace CarSharing_Database_GraphQL.ModelData
     {
         [Key]
         public string LicenseNo { get; set; }
-        [Required]
         public  string Brand { get; set; }
-        [Required]
         public  string Model { get; set; }
         public string Type { get; set; }
         public  string Transmission { get; set; }
@@ -17,7 +15,6 @@ namespace CarSharing_Database_GraphQL.ModelData
         public int Seats { get; set; }
         public int ManufactureYear { get; set; }
         public double Mileage { get; set; }
-        
         public string OwnerCpr { get; set; }
     }
     
