@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CarSharing_Database_GraphQL.Repositories;
-using CarSharing_Database_GraphQL.Persistence;
+using CarSharing_Database_GraphQL.Dao;
 using CarSharing_Database_GraphQL.Queries;
 using GraphQL.Server.Ui.Voyager;
 using Microsoft.AspNetCore.Builder;
@@ -20,11 +19,9 @@ namespace CarSharing_Database_GraphQL
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CarSharingDbContext>();
-            
             services
-                .AddScoped<IVehicleRepo, VehicleRepo>()
-                .AddScoped<IListingRepo, ListingRepo>();
+                .AddScoped<IVehicleDao, VehicleDao>()
+                .AddScoped<IListingDao, ListingDao>();
 
             services
                 .AddGraphQLServer()
