@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using CarSharing_Database_GraphQL.Repositories;
 using CarSharing_Database_GraphQL.ModelData;
 using HotChocolate;
@@ -9,9 +11,9 @@ namespace CarSharing_Database_GraphQL.Queries
     {
 
         [GraphQLDescription("Get a vehicle by license number.")]
-        public Vehicle GetVehicle([Service] IVehicleRepo vehicleRepo, string licenseNo)
+        public async Task<Vehicle> GetVehicle([Service] IVehicleRepo vehicleRepo, string licenseNo)
         {
-            return vehicleRepo.Get(licenseNo);
+            return await vehicleRepo.GetAsync(licenseNo);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CarSharing_Database_GraphQL.Mutations;
 using CarSharing_Database_GraphQL.Repositories;
 using CarSharing_Database_GraphQL.Persistence;
 using CarSharing_Database_GraphQL.Queries;
@@ -16,11 +17,20 @@ namespace CarSharing_Database_GraphQL
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        // TODO 10.11 by Ion - Delete after development
+        // exposes the details of the graphQL exceptions
+        private readonly IWebHostEnvironment _env;
+
+        public Startup(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
+        // ------
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CarSharingDbContext>();
+            services
+                .AddDbContext<CarSharingDbContext>();
             
             services
                 .AddScoped<IVehicleRepo, VehicleRepo>()
@@ -28,7 +38,11 @@ namespace CarSharing_Database_GraphQL
 
             services
                 .AddGraphQLServer()
-                .AddQueryType<Query>();
+                // TODO 10.11 by Ion - Delete after development
+                .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = _env.IsDevelopment())
+                //---
+                .AddQueryType<Query>()
+                .AddMutationType<Mutation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
