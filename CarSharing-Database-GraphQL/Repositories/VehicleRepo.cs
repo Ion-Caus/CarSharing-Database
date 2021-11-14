@@ -35,14 +35,30 @@ namespace CarSharing_Database_GraphQL.Repositories
             }
         }
 
-        public Task<Vehicle> UpdateAsync(Vehicle vehicle)
+        public async Task<Vehicle> UpdateAsync(Vehicle vehicle)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbContext.Update(vehicle);
+                await _dbContext.SaveChangesAsync();
+                return vehicle;
+            }
+            catch (Exception)
+            {
+                throw new Exception($"Did not find vehicle with licenseNo #{vehicle.LicenseNo}");
+            }
         }
+        
 
-        public Task RemoveAsync(string licenseNo)
+        public async Task RemoveAsync(string licenseNo)
         {
-            throw new NotImplementedException();
+            Vehicle toRemove = await _dbContext.Vehicles.FirstOrDefaultAsync(v => v.LicenseNo == licenseNo);
+            if (toRemove != null)
+            {
+                _dbContext.Vehicles.Remove(toRemove);
+                await _dbContext.SaveChangesAsync();
+            }
+                
         }
     }
 }
