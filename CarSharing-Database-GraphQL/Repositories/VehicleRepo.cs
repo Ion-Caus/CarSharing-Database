@@ -52,7 +52,7 @@ namespace CarSharing_Database_GraphQL.Repositories
 
         public async Task RemoveAsync(string licenseNo)
         {
-            Vehicle toRemove = await _dbContext.Vehicles.FirstOrDefaultAsync(v => v.LicenseNo == licenseNo);
+            var toRemove = await _dbContext.Vehicles.FirstOrDefaultAsync(v => v.LicenseNo == licenseNo);
             if (toRemove != null)
             {
                 _dbContext.Vehicles.Remove(toRemove);

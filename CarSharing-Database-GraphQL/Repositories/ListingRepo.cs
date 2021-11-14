@@ -46,7 +46,6 @@ namespace CarSharing_Database_GraphQL.Repositories
         {
             try
             {
-                // Listing toUpdate = await _dbContext.Listings.FirstAsync(l => l.Id == listing.Id);
                 _dbContext.Update(listing);
                 await _dbContext.SaveChangesAsync();
                 return listing;
@@ -60,7 +59,7 @@ namespace CarSharing_Database_GraphQL.Repositories
 
         public async Task RemoveAsync(int id)
         {
-            Listing toRemove = await _dbContext.Listings.FirstOrDefaultAsync(l => l.Id == id);
+            var toRemove = await _dbContext.Listings.FirstOrDefaultAsync(l => l.Id == id);
             if (toRemove != null)
             {
                 _dbContext.Listings.Remove(toRemove);
