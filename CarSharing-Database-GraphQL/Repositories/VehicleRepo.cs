@@ -50,15 +50,15 @@ namespace CarSharing_Database_GraphQL.Repositories
         }
         
 
-        public async Task RemoveAsync(string licenseNo)
+        public async Task<bool> RemoveAsync(string licenseNo)
         {
             var toRemove = await _dbContext.Vehicles.FirstOrDefaultAsync(v => v.LicenseNo == licenseNo);
-            if (toRemove != null)
-            {
-                _dbContext.Vehicles.Remove(toRemove);
-                await _dbContext.SaveChangesAsync();
-            }
-                
+            if (toRemove == null) return false;
+            
+            _dbContext.Vehicles.Remove(toRemove);
+            await _dbContext.SaveChangesAsync();
+            return true;
+
         }
     }
 }

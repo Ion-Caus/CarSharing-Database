@@ -9,7 +9,7 @@ namespace CarSharing_Database_GraphQL.Mutations
 {
     public partial class Mutation
     {
-        public async Task<Listing> AddListing([Service] IListingRepo listingRepo, ListingInput input)
+        public async Task<Listing> AddListing([Service] IListingRepo listingRepo, AddListingInput input)
         {
             var listing = new Listing
             {
@@ -39,13 +39,11 @@ namespace CarSharing_Database_GraphQL.Mutations
             };
             
             return await listingRepo.UpdateAsync(listing);
-            
-            // return await listingRepo.UpdateAsync(listing);
         }
         
-        // public async Task RemoveListing([Service] IListingRepo listingRepo, int id)
-        // {
-        //     await listingRepo.RemoveAsync(id);
-        // }
+        public async Task<bool> RemoveListing([Service] IListingRepo listingRepo, int id)
+        {
+            return await listingRepo.RemoveAsync(id);
+        }
     }
 }

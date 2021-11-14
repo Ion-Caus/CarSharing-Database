@@ -29,7 +29,7 @@ namespace CarSharing_Database_GraphQL.Repositories
         public async Task<IList<Listing>> GetAsync(string location, DateTime dateFrom, DateTime dateTo)
         {
             return await _dbContext.Listings
-                .Include(listing =>  listing.Vehicle)
+                .Include(listing => listing.Vehicle)
                 .Where(l =>
                     l.Location.Equals(location)
                     && l.DateFrom < dateFrom
@@ -57,14 +57,15 @@ namespace CarSharing_Database_GraphQL.Repositories
         }
 
 
-        public async Task RemoveAsync(int id)
+        public async Task<bool> RemoveAsync(int id)
         {
             var toRemove = await _dbContext.Listings.FirstOrDefaultAsync(l => l.Id == id);
-            if (toRemove != null)
-            {
-                _dbContext.Listings.Remove(toRemove);
-                await _dbContext.SaveChangesAsync();
-            }
+            if (toRemove == null) return false;
+            
+            _dbContext.Listings.Remove(toRemove);
+            await _dbContext.SaveChangesAsync();
+            return true;
+
         }
     }
 }

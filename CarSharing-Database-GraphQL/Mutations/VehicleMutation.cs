@@ -17,9 +17,9 @@ namespace CarSharing_Database_GraphQL.Mutations
             return await vehicleRepo.UpdateAsync(vehicle);
         }
         
-        public async Task RemoveVehicle([Service] IVehicleRepo vehicleRepo, string licenseNo)
+        public async Task<bool> RemoveVehicle([Service] IVehicleRepo vehicleRepo, string licenseNo)
         {
-            await vehicleRepo.RemoveAsync(licenseNo);
+            return await vehicleRepo.RemoveAsync(licenseNo);
         }
     }
 }

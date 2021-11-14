@@ -12,6 +12,6 @@ namespace CarSharing_Database_GraphQL.Repositories
         Task<IList<Listing>> GetAsync(string location, DateTime dateFrom, DateTime dateTo);
         Task<Listing> GetAsync(string location, DateInterval dateInterval);
         Task<Listing> UpdateAsync(Listing listing);
-        Task RemoveAsync(int id);
+        Task<bool> RemoveAsync(int id);
     }
 }

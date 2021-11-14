@@ -8,6 +8,6 @@ namespace CarSharing_Database_GraphQL.Repositories
         Task<Vehicle> AddAsync(Vehicle vehicle);
         Task<Vehicle> GetAsync(string licenseNo);
         Task<Vehicle> UpdateAsync(Vehicle vehicle);
-        Task RemoveAsync(string licenseNo);
+        Task<bool> RemoveAsync(string licenseNo);
     }
 }
