@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CarSharing_Database_GraphQL.ModelData
+namespace Entity.ModelData
 {
     public class Listing
     {

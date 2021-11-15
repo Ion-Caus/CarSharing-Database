@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CarSharing_Database_GraphQL.ModelData;
+using Entity.ModelData;
 using Microsoft.VisualBasic;
 
-namespace CarSharing_Database_GraphQL.Repositories
+namespace Database_EFC.Repositories
 {
     public interface IListingRepo
     {

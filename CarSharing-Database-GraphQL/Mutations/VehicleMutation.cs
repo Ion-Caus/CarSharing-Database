@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using CarSharing_Database_GraphQL.ModelData;
-using CarSharing_Database_GraphQL.Repositories;
+using Database_EFC.Repositories;
+using Entity.ModelData;
 using HotChocolate;
 
 namespace CarSharing_Database_GraphQL.Mutations

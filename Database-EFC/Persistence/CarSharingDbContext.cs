@@ -1,8 +1,7 @@
-using System.Threading;
-using CarSharing_Database_GraphQL.ModelData;
+using Entity.ModelData;
 using Microsoft.EntityFrameworkCore;
 
-namespace CarSharing_Database_GraphQL.Persistence
+namespace Database_EFC.Persistence
 {
     public class CarSharingDbContext : DbContext
     {
