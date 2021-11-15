@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Database_EFC.Persistence;
 using Entity.ModelData;
+using Logger.Log;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 
@@ -28,6 +30,7 @@ namespace Database_EFC.Repositories
 
         public async Task<IList<Listing>> GetAsync(string location, DateTime dateFrom, DateTime dateTo)
         {
+            Log.AddLog($"|Repositories/ListingRepo.GetAsync| : Request :  Location:{location}, DateFrom:{dateFrom}, DateTo:{dateTo}");
             return await _dbContext.Listings
                 .Include(listing => listing.Vehicle)
                 .Where(l =>
@@ -48,10 +51,12 @@ namespace Database_EFC.Repositories
             {
                 _dbContext.Update(listing);
                 await _dbContext.SaveChangesAsync();
+                Log.AddLog($"|Repositories/ListingRepo.UpdateAsync| : Reply : {JsonSerializer.Serialize(listing)}");
                 return listing;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Log.AddLog($"|Repositories/ListingRepo.UpdateAsync| : Error : {e.Message}");
                 throw new Exception($"Did not find listing with id #{listing.Id}");
             }
         }
@@ -59,6 +64,7 @@ namespace Database_EFC.Repositories
 
         public async Task<bool> RemoveAsync(int id)
         {
+            Log.AddLog($"|Repositories/ListingRepo.RemoveAsync| : Request : Id:{id}");
             var toRemove = await _dbContext.Listings.FirstOrDefaultAsync(l => l.Id == id);
             if (toRemove == null) return false;
             

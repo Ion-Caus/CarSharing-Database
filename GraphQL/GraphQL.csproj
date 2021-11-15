@@ -13,6 +13,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Database-EFC\Database-EFC.csproj" />
       <ProjectReference Include="..\Entity\Entity.csproj" />
+      <ProjectReference Include="..\Logger\Logger.csproj" />
     </ItemGroup>
 
 </Project>
