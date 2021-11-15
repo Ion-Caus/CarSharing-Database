@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CarSharing_Database_GraphQL.ModelData;
 using CarSharing_Database_GraphQL.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -17,35 +18,54 @@ namespace CarSharing_Database_GraphQL.Repositories
             _dbContext = dbContext;
         }
 
-        public Listing Add(Listing listing)
+        public async Task<Listing> AddAsync(Listing listing)
         {
-            throw new NotImplementedException();
+            var added = await _dbContext.Listings.AddAsync(listing);
+            _dbContext.Attach(listing.Vehicle);
+            await _dbContext.SaveChangesAsync();
+            return added.Entity;
         }
 
-        public IList<Listing> Get(string location, DateTime dateFrom, DateTime dateTo)
+        public async Task<IList<Listing>> GetAsync(string location, DateTime dateFrom, DateTime dateTo)
         {
-            return _dbContext.Listings
-                .Include(listing =>  listing.Vehicle)
+            return await _dbContext.Listings
+                .Include(listing => listing.Vehicle)
                 .Where(l =>
                     l.Location.Equals(location)
                     && l.DateFrom < dateFrom
                     && l.DateTo > dateTo)
-                .ToList();
+                .ToListAsync();
         }
 
-        public Listing Get(string location, DateInterval dateInterval)
+        public Task<Listing> GetAsync(string location, DateInterval dateInterval)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Listing listing)
+        public async Task<Listing> UpdateAsync(Listing listing)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbContext.Update(listing);
+                await _dbContext.SaveChangesAsync();
+                return listing;
+            }
+            catch (Exception)
+            {
+                throw new Exception($"Did not find listing with id #{listing.Id}");
+            }
         }
 
-        public bool Remove(int id)
+
+        public async Task<bool> RemoveAsync(int id)
         {
-            throw new NotImplementedException();
+            var toRemove = await _dbContext.Listings.FirstOrDefaultAsync(l => l.Id == id);
+            if (toRemove == null) return false;
+            
+            _dbContext.Listings.Remove(toRemove);
+            await _dbContext.SaveChangesAsync();
+            return true;
+
         }
     }
 }

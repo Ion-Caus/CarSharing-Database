@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CarSharing_Database_GraphQL.Migrations
 {
     [DbContext(typeof(CarSharingDbContext))]
-    [Migration("20211108153458_InitialCreate")]
+    [Migration("20211110200659_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
