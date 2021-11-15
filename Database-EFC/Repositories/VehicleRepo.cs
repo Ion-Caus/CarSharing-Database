@@ -1,7 +1,9 @@
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Database_EFC.Persistence;
 using Entity.ModelData;
+using Logger.Log;
 using Microsoft.EntityFrameworkCore;
 
 namespace Database_EFC.Repositories
@@ -17,6 +19,7 @@ namespace Database_EFC.Repositories
 
         public async Task<Vehicle> AddAsync(Vehicle vehicle)
         {
+            Log.AddLog($"|Repositories/VehicleRepo.AddAsync| : Request : {JsonSerializer.Serialize(vehicle)}");
             var added = await _dbContext.Vehicles.AddAsync(vehicle);
             await _dbContext.SaveChangesAsync();
             return added.Entity;
@@ -26,10 +29,13 @@ namespace Database_EFC.Repositories
         {
             try
             {
-                return await _dbContext.Vehicles.FirstAsync(vehicle => vehicle.LicenseNo == licenseNo);
+                Log.AddLog($"|Repositories/VehicleRepo.GetAsync| : Request :  LicenseNo:{licenseNo}");
+                Vehicle vehicle = await _dbContext.Vehicles.FirstAsync(vehicle => vehicle.LicenseNo == licenseNo);
+                return vehicle;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Log.AddLog($"|Repositories/VehicleRepo.GetAsync| : Error : {e.Message}");
                 throw new Exception($"Did not find the vehicle with license number of {licenseNo}");
             }
         }
@@ -40,10 +46,12 @@ namespace Database_EFC.Repositories
             {
                 _dbContext.Update(vehicle);
                 await _dbContext.SaveChangesAsync();
+                Log.AddLog($"|Repositories/VehicleRepo.UpdateAsync| : Reply : {JsonSerializer.Serialize(vehicle)}");
                 return vehicle;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Log.AddLog($"|Repositories/VehicleRepo.UpdateAsync| : Error : {e.Message}");
                 throw new Exception($"Did not find vehicle with licenseNo #{vehicle.LicenseNo}");
             }
         }
@@ -51,6 +59,7 @@ namespace Database_EFC.Repositories
 
         public async Task<bool> RemoveAsync(string licenseNo)
         {
+            Log.AddLog($"|Repositories/VehicleRepo.RemoveAsync| : Request : LicenseNo:{licenseNo}");
             var toRemove = await _dbContext.Vehicles.FirstOrDefaultAsync(v => v.LicenseNo == licenseNo);
             if (toRemove == null) return false;
             
