@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CarSharing_Database_GraphQL.ModelData;
-using CarSharing_Database_GraphQL.Persistence;
+using Database_EFC.Persistence;
+using Entity.ModelData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 
-namespace CarSharing_Database_GraphQL.Repositories
+namespace Database_EFC.Repositories
 {
     public class ListingRepo : IListingRepo
     {

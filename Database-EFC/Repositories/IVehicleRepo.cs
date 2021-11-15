@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using CarSharing_Database_GraphQL.ModelData;
+using Entity.ModelData;
 
-namespace CarSharing_Database_GraphQL.Repositories
+namespace Database_EFC.Repositories
 {
     public interface IVehicleRepo
     {

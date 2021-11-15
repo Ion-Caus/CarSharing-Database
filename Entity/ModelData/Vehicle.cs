@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using HotChocolate;
 
-namespace CarSharing_Database_GraphQL.ModelData
+namespace Entity.ModelData
 {
     public class Vehicle
     {

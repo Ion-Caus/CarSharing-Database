@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CarSharing_Database_GraphQL.Repositories;
-using CarSharing_Database_GraphQL.ModelData;
+using Database_EFC.Repositories;
+using Entity.ModelData;
 using HotChocolate;
 
 namespace CarSharing_Database_GraphQL.Queries

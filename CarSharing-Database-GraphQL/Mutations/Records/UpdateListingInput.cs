@@ -1,5 +1,5 @@
 ﻿using System;
-using CarSharing_Database_GraphQL.ModelData;
+using Entity.ModelData;
 
 namespace CarSharing_Database_GraphQL.Mutations.Records
 {
