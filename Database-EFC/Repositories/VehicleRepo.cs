@@ -59,13 +59,20 @@ namespace Database_EFC.Repositories
 
         public async Task<bool> RemoveAsync(string licenseNo)
         {
-            Log.AddLog($"|Repositories/VehicleRepo.RemoveAsync| : Request : LicenseNo:{licenseNo}");
             var toRemove = await _dbContext.Vehicles.FirstOrDefaultAsync(v => v.LicenseNo == licenseNo);
             if (toRemove == null) return false;
-            
-            _dbContext.Vehicles.Remove(toRemove);
-            await _dbContext.SaveChangesAsync();
-            return true;
+            try
+            {
+                Log.AddLog($"|Repositories/VehicleRepo.RemoveAsync| : Request : LicenseNo:{licenseNo}");
+                _dbContext.Vehicles.Remove(toRemove);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Log.AddLog($"|Repositories/VehicleRepo.RemoveAsync| : Error : {e.Message}");
+                throw new Exception($"Cannot remove the vehicle with licenseNo #{licenseNo}");
+            }
 
         }
     }

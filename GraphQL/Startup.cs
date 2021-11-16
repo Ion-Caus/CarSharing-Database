@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using CarSharing_Database_GraphQL.ErrorsFilter;
 using CarSharing_Database_GraphQL.Mutations;
 using CarSharing_Database_GraphQL.Queries;
 using Database_EFC.Persistence;
@@ -9,7 +6,6 @@ using Database_EFC.Repositories;
 using GraphQL.Server.Ui.Voyager;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -43,6 +39,8 @@ namespace CarSharing_Database_GraphQL
                 //---
                 .AddQueryType<Query>()
                 .AddMutationType<Mutation>();
+                
+            services.AddErrorFilter<GraphQlErrorFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

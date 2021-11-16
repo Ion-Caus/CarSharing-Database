@@ -30,7 +30,8 @@ namespace Database_EFC.Repositories
 
         public async Task<IList<Listing>> GetAsync(string location, DateTime dateFrom, DateTime dateTo)
         {
-            Log.AddLog($"|Repositories/ListingRepo.GetAsync| : Request :  Location:{location}, DateFrom:{dateFrom}, DateTo:{dateTo}");
+            Log.AddLog(
+                $"|Repositories/ListingRepo.GetAsync| : Request :  Location:{location}, DateFrom:{dateFrom}, DateTo:{dateTo}");
             return await _dbContext.Listings
                 .Include(listing => listing.Vehicle)
                 .Where(l =>
@@ -64,14 +65,21 @@ namespace Database_EFC.Repositories
 
         public async Task<bool> RemoveAsync(int id)
         {
-            Log.AddLog($"|Repositories/ListingRepo.RemoveAsync| : Request : Id:{id}");
             var toRemove = await _dbContext.Listings.FirstOrDefaultAsync(l => l.Id == id);
             if (toRemove == null) return false;
-            
-            _dbContext.Listings.Remove(toRemove);
-            await _dbContext.SaveChangesAsync();
-            return true;
 
+            try
+            {
+                Log.AddLog($"|Repositories/ListingRepo.RemoveAsync| : Request : Id:{id}");
+                _dbContext.Listings.Remove(toRemove);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Log.AddLog($"|Repositories/ListingRepo.RemoveAsync| : Error : {e.Message}");
+                throw new Exception($"Cannot remove the listing with Id #{id}");
+            }
         }
     }
 }
