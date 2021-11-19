@@ -7,6 +7,8 @@ namespace Database_EFC.Persistence
     {
         public DbSet<Listing> Listings { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

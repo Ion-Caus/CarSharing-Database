@@ -14,7 +14,7 @@ namespace Entity.ModelData
         public int Seats { get; set; }
         public int ManufactureYear { get; set; }
         public double Mileage { get; set; }
-        public string OwnerCpr { get; set; }
+        public Customer Owner { get; set; }
     }
     
     public static class VehicleTransmission

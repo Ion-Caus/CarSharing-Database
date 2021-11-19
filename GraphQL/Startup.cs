@@ -3,6 +3,7 @@ using CarSharing_Database_GraphQL.Mutations;
 using CarSharing_Database_GraphQL.Queries;
 using Database_EFC.Persistence;
 using Database_EFC.Repositories;
+using Database_EFC.Repositories.Impl;
 using GraphQL.Server.Ui.Voyager;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,7 +31,9 @@ namespace CarSharing_Database_GraphQL
             
             services
                 .AddScoped<IVehicleRepo, VehicleRepo>()
-                .AddScoped<IListingRepo, ListingRepo>();
+                .AddScoped<IListingRepo, ListingRepo>()
+                .AddScoped<ICustomerRepo, CustomerRepo>()
+                .AddScoped<IAccountRepo, AccountRepo>();
 
             services
                 .AddGraphQLServer()

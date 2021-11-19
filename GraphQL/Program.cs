@@ -39,7 +39,6 @@ namespace CarSharing_Database_GraphQL
                         LicenseNo = "XZ01334",
                         ManufactureYear = 2018,
                         Mileage = 50_266,
-                        OwnerCpr = "1212901212"
                     },
                     new()
                     {
@@ -52,7 +51,6 @@ namespace CarSharing_Database_GraphQL
                         LicenseNo = "AB11222",
                         ManufactureYear = 2014,
                         Mileage = 170_335,
-                        OwnerCpr = "0101018877"
                     },
                     new()
                     {
@@ -65,7 +63,6 @@ namespace CarSharing_Database_GraphQL
                         LicenseNo = "MK99222",
                         ManufactureYear = 2020,
                         Mileage = 10_866,
-                        OwnerCpr = "2010801234"
                     }
                 };
             foreach (var vehicle in vehicles)

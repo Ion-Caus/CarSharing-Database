@@ -49,7 +49,6 @@ namespace Database_EFC.Persistence
                     LicenseNo = "XZ01334",
                     ManufactureYear = 2018,
                     Mileage = 50_266,
-                    OwnerCpr = "1212901212"
                 },
                 new()
                 {
@@ -62,7 +61,6 @@ namespace Database_EFC.Persistence
                     LicenseNo = "AB11222",
                     ManufactureYear = 2014,
                     Mileage = 170_335,
-                    OwnerCpr = "0101018877"
                 },
                 new()
                 {
@@ -75,7 +73,6 @@ namespace Database_EFC.Persistence
                     LicenseNo = "MK99222",
                     ManufactureYear = 2020,
                     Mileage = 10_866,
-                    OwnerCpr = "2010801234"
                 }
             };
             Vehicles = v.ToList();
