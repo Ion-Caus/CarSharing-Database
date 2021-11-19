@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using CarSharing_Database_GraphQL.Mutations.Records;
 using Database_EFC.Repositories;
@@ -25,19 +24,8 @@ namespace CarSharing_Database_GraphQL.Mutations
 
         }
         
-        public async Task<Listing> UpdateListing([Service] IListingRepo listingRepo, UpdateListingInput input)
+        public async Task<Listing> UpdateListing([Service] IListingRepo listingRepo, Listing listing)
         {
-            var listing = new Listing
-            {
-                Id = input.Id,
-                ListedDate = input.ListedDate,
-                Price = input.Price,
-                Location = input.Location,
-                DateFrom = input.DateFrom,
-                DateTo = input.DateTo,
-                Vehicle = input.Vehicle
-            };
-            
             return await listingRepo.UpdateAsync(listing);
         }
         

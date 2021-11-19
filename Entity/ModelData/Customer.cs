@@ -14,7 +14,5 @@ namespace Entity.ModelData
         [StringLength(255, MinimumLength = 3)]
         public string LastName { get; set; }
         public string PhoneNo { get; set; }
-        public IList<Vehicle> Vehicles { get; set; }
-
     }
 }

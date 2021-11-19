@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using HotChocolate;
 
 namespace Entity.ModelData
 {
@@ -8,7 +7,6 @@ namespace Entity.ModelData
         [Key]
         public string Username { get; set; }
         [Required]
-        [GraphQLIgnore]
         public string Password { get; set; }
         public Customer Customer { get; set; }
     }

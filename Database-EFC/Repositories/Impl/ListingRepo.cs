@@ -9,7 +9,7 @@ using Logger.Log;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 
-namespace Database_EFC.Repositories
+namespace Database_EFC.Repositories.Impl
 {
     public class ListingRepo : IListingRepo
     {
@@ -22,6 +22,7 @@ namespace Database_EFC.Repositories
 
         public async Task<Listing> AddAsync(Listing listing)
         {
+            Log.AddLog($"|Repositories/ListingRepo.AddAsync| : Request : {JsonSerializer.Serialize(listing)}");
             var added = await _dbContext.Listings.AddAsync(listing);
             _dbContext.Attach(listing.Vehicle);
             await _dbContext.SaveChangesAsync();
@@ -58,7 +59,7 @@ namespace Database_EFC.Repositories
             catch (Exception e)
             {
                 Log.AddLog($"|Repositories/ListingRepo.UpdateAsync| : Error : {e.Message}");
-                throw new Exception($"Did not find listing with id #{listing.Id}");
+                throw new Exception($"Did not find listing with Id #{listing.Id}");
             }
         }
 

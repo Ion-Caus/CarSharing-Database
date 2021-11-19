@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Database_EFC.Repositories;
 using Entity.ModelData;
@@ -14,6 +15,12 @@ namespace CarSharing_Database_GraphQL.Queries
         public async Task<Vehicle> GetVehicle([Service] IVehicleRepo vehicleRepo, string licenseNo)
         {
             return await vehicleRepo.GetAsync(licenseNo);
+        }
+        
+        [GraphQLDescription("Get a list of vehicles by owner's cpr.")]
+        public async Task<List<Vehicle>> GetVehiclesByOwner([Service] IVehicleRepo vehicleRepo, string cpr)
+        {
+            return await vehicleRepo.GetByOwnerAsync(cpr);
         }
     }
 }
