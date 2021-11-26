@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using HotChocolate;
 
 namespace Entity.ModelData
 {
-    public class Vehicle
+    public class Vehicle : ISoftDeletable
     {
         [Key]
         public string LicenseNo { get; set; }
@@ -15,6 +16,9 @@ namespace Entity.ModelData
         public int ManufactureYear { get; set; }
         public double Mileage { get; set; }
         public Customer Owner { get; set; }
+        
+        [GraphQLIgnore]
+        public bool IsDeleted { get; set; }
     }
     
     public static class VehicleTransmission

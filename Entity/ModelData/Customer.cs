@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Entity.ModelData
@@ -13,6 +12,7 @@ namespace Entity.ModelData
         [Required]
         [StringLength(255, MinimumLength = 3)]
         public string LastName { get; set; }
+        [Required]
         public string PhoneNo { get; set; }
     }
 }

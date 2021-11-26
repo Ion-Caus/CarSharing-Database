@@ -1,10 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using HotChocolate;
 
 namespace Entity.ModelData
 {
-    public class Listing
+    public class Listing : ISoftDeletable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -17,6 +18,8 @@ namespace Entity.ModelData
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public Vehicle Vehicle { get; set; }
-        
+
+        [GraphQLIgnore]
+        public bool IsDeleted { get; set; }
     }
 }

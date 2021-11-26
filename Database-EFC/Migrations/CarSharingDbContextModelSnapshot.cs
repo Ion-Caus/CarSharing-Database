@@ -54,6 +54,7 @@ namespace CarSharing_Database_GraphQL.Migrations
                         .HasColumnType("character varying(255)");
 
                     b.Property<string>("PhoneNo")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Cpr");
@@ -73,6 +74,9 @@ namespace CarSharing_Database_GraphQL.Migrations
 
                     b.Property<DateTime>("DateTo")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("ListedDate")
                         .HasColumnType("timestamp without time zone");
@@ -104,6 +108,9 @@ namespace CarSharing_Database_GraphQL.Migrations
 
                     b.Property<string>("FuelType")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("ManufactureYear")
                         .HasColumnType("integer");

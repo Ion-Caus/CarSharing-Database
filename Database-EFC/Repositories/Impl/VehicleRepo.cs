@@ -22,7 +22,9 @@ namespace Database_EFC.Repositories.Impl
         public async Task<Vehicle> AddAsync(Vehicle vehicle)
         {
             Log.AddLog($"|Repositories/VehicleRepo.AddAsync| : Request : {JsonSerializer.Serialize(vehicle)}");
+            vehicle.IsDeleted = false;
             var added = await _dbContext.Vehicles.AddAsync(vehicle);
+            _dbContext.Attach(vehicle.Owner);
             await _dbContext.SaveChangesAsync();
             return added.Entity;
         }
@@ -34,6 +36,7 @@ namespace Database_EFC.Repositories.Impl
                 Log.AddLog($"|Repositories/VehicleRepo.GetAsync| : Request :  LicenseNo:{licenseNo}");
                 Vehicle vehicle = await _dbContext.Vehicles
                     .Include(vehicle => vehicle.Owner)
+                    .Where(vehicle => !vehicle.IsDeleted)
                     .FirstAsync(vehicle => vehicle.LicenseNo == licenseNo);
                 return vehicle;
             }
@@ -51,6 +54,7 @@ namespace Database_EFC.Repositories.Impl
                 Log.AddLog($"|Repositories/VehicleRepo.GetByOwnerAsync| : Request :  Cpr:{cpr}");
                 return await _dbContext.Vehicles
                     .Include(vehicle => vehicle.Owner)
+                    .Where(vehicle => !vehicle.IsDeleted)
                     .Where(vehicle => vehicle.Owner.Cpr.Equals(cpr))
                     .ToListAsync();
             }
