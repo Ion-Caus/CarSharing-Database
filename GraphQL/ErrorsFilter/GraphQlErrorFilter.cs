@@ -1,5 +1,5 @@
-using System.Diagnostics;
 using HotChocolate;
+using Logger.Log;
 
 namespace CarSharing_Database_GraphQL.ErrorsFilter
 {
@@ -7,8 +7,15 @@ namespace CarSharing_Database_GraphQL.ErrorsFilter
     {
         public IError OnError(IError error)
         {
-            Debug.Assert(error.Exception?.Message != null, "Error is null");
-            return error.WithMessage(error.Exception.Message);
+            if (error?.Exception?.Message == null) return null;
+
+            string errorMessage = error.Exception.Message;
+            if (error.Exception.InnerException?.Message != null)
+                errorMessage +=  "    InnerException: " 
+                                 + error.Exception.InnerException.Message;
+
+            Log.AddLog($"|GraphQL/ErrorFiler| : Error : {errorMessage}");
+            return error.WithMessage(errorMessage);
         }
     }
 }
