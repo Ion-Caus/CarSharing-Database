@@ -23,6 +23,7 @@ namespace Database_EFC.Repositories.Impl
         public async Task<Listing> AddAsync(Listing listing)
         {
             Log.AddLog($"|Repositories/ListingRepo.AddAsync| : Request : {JsonSerializer.Serialize(listing)}");
+            listing.IsDeleted = false;
             var added = await _dbContext.Listings.AddAsync(listing);
             _dbContext.Attach(listing.Vehicle);
             await _dbContext.SaveChangesAsync();
@@ -35,6 +36,7 @@ namespace Database_EFC.Repositories.Impl
                 $"|Repositories/ListingRepo.GetAsync| : Request :  Location:{location}, DateFrom:{dateFrom}, DateTo:{dateTo}");
             return await _dbContext.Listings
                 .Include(listing => listing.Vehicle)
+                .Where(l => !l.IsDeleted)
                 .Where(l =>
                     l.Location.Equals(location)
                     && l.DateFrom < dateFrom
