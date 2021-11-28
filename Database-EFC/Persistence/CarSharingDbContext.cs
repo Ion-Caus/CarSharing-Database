@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Entity.ModelData;
+using Entity.ModelData.Behaviors;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Database_EFC.Persistence
 {
@@ -24,21 +27,40 @@ namespace Database_EFC.Persistence
             );
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Vehicle>().HasQueryFilter(p => !p.IsDeleted);
+            modelBuilder.Entity<Listing>().HasQueryFilter(p => !p.IsDeleted);
+        }
+
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
             var changed = ChangeTracker.Entries();
             if (changed == null) return base.SaveChangesAsync(cancellationToken);
-            
-            foreach (var entry in changed.Where(e => e.State == EntityState.Deleted))
+
+            UpdateSoftDeleteStatuses(changed);
+            return base.SaveChangesAsync(cancellationToken);
+        }
+        
+        private void UpdateSoftDeleteStatuses(IEnumerable<EntityEntry> changedEntries)
+        {
+            foreach (var entry in changedEntries)
             {
-                entry.State = EntityState.Unchanged;
                 if (entry.Entity is ISoftDeletable deletable)
                 {
-                    deletable.IsDeleted = true;
+                    switch (entry.State)
+                    {
+                        case EntityState.Added:
+                            deletable.IsDeleted = false;
+                            break;
+                        case EntityState.Deleted:
+                            entry.State = EntityState.Unchanged;
+                            deletable.IsDeleted = true;
+                            break;
+                    }
                 }
             }
-            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

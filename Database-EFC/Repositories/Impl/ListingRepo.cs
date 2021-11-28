@@ -23,7 +23,6 @@ namespace Database_EFC.Repositories.Impl
         public async Task<Listing> AddAsync(Listing listing)
         {
             Log.AddLog($"|Repositories/ListingRepo.AddAsync| : Request : {JsonSerializer.Serialize(listing)}");
-            listing.IsDeleted = false;
             var added = await _dbContext.Listings.AddAsync(listing);
             _dbContext.Attach(listing.Vehicle);
             await _dbContext.SaveChangesAsync();
@@ -36,12 +35,39 @@ namespace Database_EFC.Repositories.Impl
                 $"|Repositories/ListingRepo.GetAsync| : Request :  Location:{location}, DateFrom:{dateFrom}, DateTo:{dateTo}");
             return await _dbContext.Listings
                 .Include(listing => listing.Vehicle)
-                .Where(l => !l.IsDeleted)
                 .Where(l =>
                     l.Location.Equals(location)
                     && l.DateFrom < dateFrom
                     && l.DateTo > dateTo)
                 .ToListAsync();
+        }
+
+        public async Task<IList<Listing>> GetByVehicleAsync(string licenseNo)
+        {
+            Log.AddLog(
+                $"|Repositories/ListingRepo.GetByVehicleAsync| : Request :  LicenseNo:{licenseNo}");
+            return await _dbContext.Listings
+                .Include(listing => listing.Vehicle)
+                .Where(l => l.Vehicle.LicenseNo.Equals(licenseNo))
+                .ToListAsync();
+        }
+
+        public async Task<Listing> GetByIdAsync(int id)
+        {
+            try
+            {
+                Log.AddLog(
+                    $"|Repositories/ListingRepo.GetByIdAsync| : Request :  Id:{id}");
+                return await _dbContext.Listings
+                    .Include(listing => listing.Vehicle)
+                    .ThenInclude(v => v.Owner)
+                    .FirstAsync(l => l.Id == id);
+            }
+            catch (Exception e)
+            {
+                Log.AddLog($"|Repositories/ListingRepo.GetByIdAsync| : Error : {e.Message}");
+                throw new Exception($"Did not find the listing with id of {id}");
+            }
         }
 
         public Task<Listing> GetAsync(string location, DateInterval dateInterval)
