@@ -21,13 +21,27 @@ namespace Database_EFC.Repositories.Impl
 
         public async Task<Vehicle> AddAsync(Vehicle vehicle)
         {
+            //Todo by Ion 28/12 - Find a proper way to restore a soft-deleted entity.
+            //it assumes that the licenseNo is tied to one car, so it updates only the millage and owner.
+            var existing = await _dbContext.Vehicles.IgnoreQueryFilters().FirstOrDefaultAsync(v => v.LicenseNo == vehicle.LicenseNo && v.IsDeleted);
+            if (existing != null)
+            {
+                existing.Mileage = vehicle.Mileage;
+                existing.Owner = vehicle.Owner;
+                existing.IsDeleted = false;
+                Log.AddLog($"|Repositories/VehicleRepo.AddAsync| : Request : Restored - {JsonSerializer.Serialize(vehicle)}");
+                _dbContext.Attach(vehicle.Owner);
+                await _dbContext.SaveChangesAsync();
+                return existing;
+            }
+            
             Log.AddLog($"|Repositories/VehicleRepo.AddAsync| : Request : {JsonSerializer.Serialize(vehicle)}");
-            vehicle.IsDeleted = false;
             var added = await _dbContext.Vehicles.AddAsync(vehicle);
             _dbContext.Attach(vehicle.Owner);
             await _dbContext.SaveChangesAsync();
             return added.Entity;
         }
+        
 
         public async Task<Vehicle> GetAsync(string licenseNo)
         {
@@ -54,7 +68,6 @@ namespace Database_EFC.Repositories.Impl
                 Log.AddLog($"|Repositories/VehicleRepo.GetByOwnerAsync| : Request :  Cpr:{cpr}");
                 return await _dbContext.Vehicles
                     .Include(vehicle => vehicle.Owner)
-                    .Where(vehicle => !vehicle.IsDeleted)
                     .Where(vehicle => vehicle.Owner.Cpr.Equals(cpr))
                     .ToListAsync();
             }

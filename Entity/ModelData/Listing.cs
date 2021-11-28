@@ -1,7 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Entity.ModelData.Behaviors;
 using HotChocolate;
+using HotChocolate.Types;
 
 namespace Entity.ModelData
 {

@@ -1,4 +1,4 @@
-namespace Entity.ModelData
+namespace Entity.ModelData.Behaviors
 {
     public interface ISoftDeletable
     {

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Entity.ModelData.Behaviors;
 using HotChocolate;
 
 namespace Entity.ModelData
