@@ -18,7 +18,7 @@ namespace CarSharing_Database_GraphQL.Queries
         }
         
         [GraphQLDescription("Get a list of vehicles by owner's cpr.")]
-        public async Task<List<Vehicle>> GetVehiclesByOwner([Service] IVehicleRepo vehicleRepo, string cpr)
+        public async Task<IList<Vehicle>> GetVehiclesByOwner([Service] IVehicleRepo vehicleRepo, string cpr)
         {
             return await vehicleRepo.GetByOwnerAsync(cpr);
         }

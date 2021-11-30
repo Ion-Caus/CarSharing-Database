@@ -22,12 +22,11 @@ namespace Database_EFC.Repositories.Impl
         public async Task<Vehicle> AddAsync(Vehicle vehicle)
         {
             //Todo by Ion 28/12 - Find a proper way to restore a soft-deleted entity.
-            //it assumes that the licenseNo is tied to one car, so it updates only the millage and owner.
+            //it assumes that the licenseNo is tied to one car, so it updates only the millage.
             var existing = await _dbContext.Vehicles.IgnoreQueryFilters().FirstOrDefaultAsync(v => v.LicenseNo == vehicle.LicenseNo && v.IsDeleted);
             if (existing != null)
             {
                 existing.Mileage = vehicle.Mileage;
-                existing.Owner = vehicle.Owner;
                 existing.IsDeleted = false;
                 Log.AddLog($"|Repositories/VehicleRepo.AddAsync| : Request : Restored - {JsonSerializer.Serialize(vehicle)}");
                 _dbContext.Attach(vehicle.Owner);
@@ -50,7 +49,6 @@ namespace Database_EFC.Repositories.Impl
                 Log.AddLog($"|Repositories/VehicleRepo.GetAsync| : Request :  LicenseNo:{licenseNo}");
                 Vehicle vehicle = await _dbContext.Vehicles
                     .Include(vehicle => vehicle.Owner)
-                    .Where(vehicle => !vehicle.IsDeleted)
                     .FirstAsync(vehicle => vehicle.LicenseNo == licenseNo);
                 return vehicle;
             }

@@ -3,15 +3,17 @@ using System;
 using Database_EFC.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CarSharing_Database_GraphQL.Migrations
 {
     [DbContext(typeof(CarSharingDbContext))]
-    partial class CarSharingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211130120131_4_Added_Lease")]
+    partial class _4_Added_Lease
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,15 +184,13 @@ namespace CarSharing_Database_GraphQL.Migrations
 
             modelBuilder.Entity("Entity.ModelData.Lease", b =>
                 {
-                    b.HasOne("Entity.ModelData.Customer", "Customer")
-                        .WithMany()
+                    b.HasOne("Entity.ModelData.Customer", null)
+                        .WithMany("Leases")
                         .HasForeignKey("CustomerCpr");
 
                     b.HasOne("Entity.ModelData.Listing", "Listing")
                         .WithMany()
                         .HasForeignKey("ListingId");
-
-                    b.Navigation("Customer");
 
                     b.Navigation("Listing");
                 });
@@ -211,6 +211,11 @@ namespace CarSharing_Database_GraphQL.Migrations
                         .HasForeignKey("OwnerCpr");
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Entity.ModelData.Customer", b =>
+                {
+                    b.Navigation("Leases");
                 });
 #pragma warning restore 612, 618
         }
