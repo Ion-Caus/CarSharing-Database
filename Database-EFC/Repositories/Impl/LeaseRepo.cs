@@ -36,6 +36,7 @@ namespace Database_EFC.Repositories.Impl
                 Log.AddLog($"|Repositories/LeaseRepo.GetAsync| : Request :  Id:{id}");
                 Lease lease = await _dbContext.Leases
                     .Include(lease => lease.Listing)
+                    .Include(lease => lease.Customer)
                     .FirstAsync(lease => lease.Id == id);
                 return lease;
             }
