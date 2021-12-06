@@ -32,7 +32,6 @@ namespace CarSharing_Database_GraphQL.Mutations
             var listing = new Listing
             {
                 Id = input.Id,
-                ListedDate = input.ListedDate,
                 Price = input.Price,
                 Location = input.Location,
                 DateFrom = input.DateFrom,
