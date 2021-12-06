@@ -80,6 +80,7 @@ namespace Database_EFC.Repositories.Impl
             try
             {
                 _dbContext.Update(listing);
+                _dbContext.Entry(listing.Vehicle).State = EntityState.Unchanged;
                 await _dbContext.SaveChangesAsync();
                 Log.AddLog($"|Repositories/ListingRepo.UpdateAsync| : Reply : {JsonSerializer.Serialize(listing)}");
                 return listing;

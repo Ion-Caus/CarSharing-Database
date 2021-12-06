@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using CarSharing_Database_GraphQL.Mutations.Records.VehicleRecords;
 using Database_EFC.Repositories;
 using Entity.ModelData;
 using HotChocolate;
@@ -7,13 +8,45 @@ namespace CarSharing_Database_GraphQL.Mutations
 {
     public partial class Mutation
     {
-        public async Task<Vehicle> AddVehicle([Service] IVehicleRepo vehicleRepo, Vehicle vehicle)
+        public async Task<Vehicle> AddVehicle([Service] IVehicleRepo vehicleRepo, VehicleInput input)
         {
+            var vehicle = new Vehicle
+            {
+                 LicenseNo = input.LicenseNo,
+                 Brand = input.Brand,
+                 Model = input.Model,
+                 Type = input.Type,
+                 Transmission = input.Transmission,
+                 FuelType = input.FuelType,
+                 Seats = input.Seats,
+                 ManufactureYear = input.ManufactureYear,
+                 Mileage = input.Mileage,
+                 Owner = new Customer
+                 {
+                     Cpr = input.Owner.Cpr
+                 }
+            };
             return await vehicleRepo.AddAsync(vehicle);
         }
         
-        public async Task<Vehicle> UpdateVehicle([Service] IVehicleRepo vehicleRepo, Vehicle vehicle)
+        public async Task<Vehicle> UpdateVehicle([Service] IVehicleRepo vehicleRepo, VehicleInput input)
         {
+            var vehicle = new Vehicle
+            {
+                LicenseNo = input.LicenseNo,
+                Brand = input.Brand,
+                Model = input.Model,
+                Type = input.Type,
+                Transmission = input.Transmission,
+                FuelType = input.FuelType,
+                Seats = input.Seats,
+                ManufactureYear = input.ManufactureYear,
+                Mileage = input.Mileage,
+                Owner = new Customer
+                {
+                    Cpr = input.Owner.Cpr
+                }
+            };
             return await vehicleRepo.UpdateAsync(vehicle);
         }
         

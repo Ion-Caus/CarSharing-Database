@@ -9,6 +9,7 @@ namespace Database_EFC.Repositories
         Task<Lease> AddAsync(Lease lease);
         Task<Lease> GetAsync(int id);
         Task<IList<Lease>> GetByListingAsync(int listingId);
+        Task<IList<Lease>> GetByCustomerAsync(string cpr);
         Task<Lease> UpdateAsync(Lease lease);
         Task<bool> RemoveAsync(int id);
     }

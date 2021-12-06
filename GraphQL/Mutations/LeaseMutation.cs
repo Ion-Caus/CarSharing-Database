@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using CarSharing_Database_GraphQL.Mutations.Records;
+using CarSharing_Database_GraphQL.Mutations.Records.LeaseRecords;
 using Database_EFC.Repositories;
 using Entity.ModelData;
 using HotChocolate;
@@ -27,8 +27,23 @@ namespace CarSharing_Database_GraphQL.Mutations
             return await leaseRepo.AddAsync(lease);
         }
         
-        public async Task<Lease> UpdateLease([Service] ILeaseRepo leaseRepo, Lease lease)
+        public async Task<Lease> UpdateLease([Service] ILeaseRepo leaseRepo, UpdateLeaseInput input)
         {
+            var lease = new Lease
+            {
+                Id = input.Id,
+                LeasedFrom = input.LeasedFrom,
+                LeasedTo = input.LeasedTo,
+                Canceled = input.IsCanceled,
+                Listing = new Listing
+                {
+                    Id = input.Listing.Id
+                },
+                Customer = new Customer
+                {
+                    Cpr = input.Customer.Cpr
+                }
+            };
             return await leaseRepo.UpdateAsync(lease);
         }
         
