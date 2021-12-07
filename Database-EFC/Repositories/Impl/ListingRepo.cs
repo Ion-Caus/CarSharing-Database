@@ -81,7 +81,6 @@ namespace Database_EFC.Repositories.Impl
             {
                 _dbContext.Update(listing);
                 _dbContext.Entry(listing.Vehicle).State = EntityState.Unchanged;
-                // listed date should not be changed
                 _dbContext.Entry(listing).Property(l => l.ListedDate).IsModified = false;
                 await _dbContext.SaveChangesAsync();
                 Log.AddLog($"|Repositories/ListingRepo.UpdateAsync| : Reply : {JsonSerializer.Serialize(listing)}");

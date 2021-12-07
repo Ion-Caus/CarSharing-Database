@@ -70,8 +70,10 @@ namespace Database_EFC.Repositories.Impl
             {
                 Log.AddLog($"|Repositories/LeaseRepo.GetByCustomerAsync| : Request :  Cpr:{cpr}");
                 return await _dbContext.Leases
-                    .Include(lease => lease.Listing)
                     .Include(lease => lease.Customer)
+                    .Include(lease => lease.Listing)
+                    .ThenInclude(listing => listing.Vehicle)
+                    .ThenInclude(vehicle => vehicle.Owner)
                     .Where(lease => lease.Customer.Cpr.Equals(cpr))
                     .ToListAsync();
             }
