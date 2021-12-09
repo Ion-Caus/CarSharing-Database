@@ -16,9 +16,15 @@ namespace CarSharing_Database_GraphQL.Queries
         }
         
         [GraphQLDescription("Get a list of leases for a specific listing's id.")]
-        public async Task<IList<Lease>> GetLeaseByListing([Service] ILeaseRepo leaseRepo, int listingId)
+        public async Task<IList<Lease>> GetLeasesByListing([Service] ILeaseRepo leaseRepo, int listingId)
         {
             return await leaseRepo.GetByListingAsync(listingId);
+        }
+        
+        [GraphQLDescription("Get a list of leases by customer's cpr.")]
+        public async Task<IList<Lease>> GetLeasesByCustomer([Service] ILeaseRepo leaseRepo, string cpr)
+        {
+            return await leaseRepo.GetByCustomerAsync(cpr);
         }
     }
 }

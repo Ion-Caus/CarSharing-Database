@@ -34,11 +34,10 @@ namespace Database_EFC.Repositories.Impl
             try
             {
                 Log.AddLog($"|Repositories/LeaseRepo.GetAsync| : Request :  Id:{id}");
-                Lease lease = await _dbContext.Leases
+                return await _dbContext.Leases
                     .Include(lease => lease.Listing)
                     .Include(lease => lease.Customer)
                     .FirstAsync(lease => lease.Id == id);
-                return lease;
             }
             catch (Exception e)
             {
@@ -54,6 +53,7 @@ namespace Database_EFC.Repositories.Impl
                 Log.AddLog($"|Repositories/LeaseRepo.GetByListingAsync| : Request :  ListingId:{listingId}");
                 return await _dbContext.Leases
                     .Include(lease => lease.Listing)
+                    .Include(lease => lease.Customer)
                     .Where(lease => lease.Listing.Id == listingId)
                     .ToListAsync();
             }
@@ -64,11 +64,34 @@ namespace Database_EFC.Repositories.Impl
             }
         }
 
+        public async Task<IList<Lease>> GetByCustomerAsync(string cpr)
+        {
+            try
+            {
+                Log.AddLog($"|Repositories/LeaseRepo.GetByCustomerAsync| : Request :  Cpr:{cpr}");
+                return await _dbContext.Leases
+                    .Include(lease => lease.Customer)
+                    .Include(lease => lease.Listing)
+                    .ThenInclude(listing => listing.Vehicle)
+                    .ThenInclude(vehicle => vehicle.Owner)
+                    .Where(lease => lease.Customer.Cpr.Equals(cpr))
+                    .ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Log.AddLog($"|Repositories/LeaseRepo.GetByCustomerAsync| : Error : {e.Message}");
+                throw new Exception($"Cannot retrieve the leases for the customer with cpr '{cpr}'");
+            }
+
+        }
+
         public async Task<Lease> UpdateAsync(Lease lease)
         {
             try
             {
                 _dbContext.Update(lease);
+                _dbContext.Entry(lease.Customer).State = EntityState.Unchanged;
+                _dbContext.Entry(lease.Listing).State = EntityState.Unchanged;
                 await _dbContext.SaveChangesAsync();
                 Log.AddLog($"|Repositories/LeaseRepo.UpdateAsync| : Reply : {JsonSerializer.Serialize(lease)}");
                 return lease;
