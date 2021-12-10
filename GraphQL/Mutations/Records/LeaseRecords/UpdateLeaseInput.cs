@@ -7,6 +7,7 @@ namespace CarSharing_Database_GraphQL.Mutations.Records.LeaseRecords
         DateTime LeasedFrom,
         DateTime LeasedTo,
         bool IsCanceled,
+        decimal TotalPrice,
         ListingKey Listing,
         CustomerKey Customer
     );
