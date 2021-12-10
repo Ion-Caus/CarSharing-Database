@@ -28,13 +28,14 @@ namespace CarSharing_Database_GraphQL
         {
             services
                 .AddDbContext<CarSharingDbContext>();
-            
+
             services
                 .AddScoped<IVehicleRepo, VehicleRepo>()
                 .AddScoped<IListingRepo, ListingRepo>()
                 .AddScoped<ICustomerRepo, CustomerRepo>()
                 .AddScoped<IAccountRepo, AccountRepo>()
-                .AddScoped<ILeaseRepo, LeaseRepo>();
+                .AddScoped<ILeaseRepo, LeaseRepo>()
+                .AddScoped<ICouponRepo, CouponRepo>();
 
             services
                 .AddGraphQLServer()

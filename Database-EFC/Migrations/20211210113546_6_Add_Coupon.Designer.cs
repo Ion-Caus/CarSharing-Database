@@ -3,15 +3,17 @@ using System;
 using Database_EFC.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CarSharing_Database_GraphQL.Migrations
 {
     [DbContext(typeof(CarSharingDbContext))]
-    partial class CarSharingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211210113546_6_Add_Coupon")]
+    partial class _6_Add_Coupon
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

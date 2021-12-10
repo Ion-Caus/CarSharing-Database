@@ -13,6 +13,8 @@ namespace Entity.ModelData
         public DateTime LeasedTo { get; set; }
         public bool Canceled { get; set; }
         
+        public decimal TotalPrice { get; set; }
+        
         public Listing Listing { get; set; }
         
         public Customer Customer { get; set; }
