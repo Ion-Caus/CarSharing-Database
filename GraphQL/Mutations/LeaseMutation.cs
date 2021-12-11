@@ -15,6 +15,7 @@ namespace CarSharing_Database_GraphQL.Mutations
                 LeasedFrom = input.LeasedFrom,
                 LeasedTo = input.LeasedTo,
                 Canceled = false,
+                TotalPrice = input.TotalPrice,
                 Listing = new Listing
                 {
                     Id = input.Listing.Id
@@ -35,6 +36,7 @@ namespace CarSharing_Database_GraphQL.Mutations
                 LeasedFrom = input.LeasedFrom,
                 LeasedTo = input.LeasedTo,
                 Canceled = input.IsCanceled,
+                TotalPrice = input.TotalPrice,
                 Listing = new Listing
                 {
                     Id = input.Listing.Id

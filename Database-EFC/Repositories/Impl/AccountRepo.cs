@@ -30,7 +30,7 @@ namespace Database_EFC.Repositories.Impl
         {
             try
             {
-                Log.AddLog($"|Repositories/AccountRepo.GetAsync| : Request : {JsonSerializer.Serialize(username)}");
+                Log.AddLog($"|Repositories/AccountRepo.GetAsync| : Request : {username}");
                 Account account = await _dbContext.Accounts
                     .Include(a => a.Customer)
                     .FirstAsync(account => account.Username.Equals(username));

@@ -52,8 +52,9 @@ namespace Database_EFC.Repositories.Impl
             {
                 Log.AddLog($"|Repositories/LeaseRepo.GetByListingAsync| : Request :  ListingId:{listingId}");
                 return await _dbContext.Leases
-                    .Include(lease => lease.Listing)
                     .Include(lease => lease.Customer)
+                    .Include(lease => lease.Listing)
+                    .ThenInclude(listing => listing.Vehicle)
                     .Where(lease => lease.Listing.Id == listingId)
                     .ToListAsync();
             }

@@ -17,6 +17,7 @@ namespace Database_EFC.Persistence
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Lease> Leases { get; set; }
+        public DbSet<Coupon> Coupons { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
