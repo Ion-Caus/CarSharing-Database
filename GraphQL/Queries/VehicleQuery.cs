@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Database_EFC.Repositories;
@@ -21,6 +20,12 @@ namespace CarSharing_Database_GraphQL.Queries
         public async Task<IList<Vehicle>> GetVehiclesByOwner([Service] IVehicleRepo vehicleRepo, string cpr)
         {
             return await vehicleRepo.GetByOwnerAsync(cpr);
+        }
+        
+        [GraphQLDescription("Get a list of vehicles by approval status.")]
+        public async Task<IList<Vehicle>> GetVehiclesByApprovalStatus([Service] IVehicleRepo vehicleRepo, bool isApproved)
+        {
+            return await vehicleRepo.GetByApprovalStatusAsync(isApproved);
         }
     }
 }

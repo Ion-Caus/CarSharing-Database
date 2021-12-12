@@ -9,6 +9,7 @@ namespace Database_EFC.Repositories
         Task<Vehicle> AddAsync(Vehicle vehicle);
         Task<Vehicle> GetAsync(string licenseNo);
         Task<List<Vehicle>> GetByOwnerAsync(string cpr);
+        Task<List<Vehicle>> GetByApprovalStatusAsync(bool isApproved);
         Task<Vehicle> UpdateAsync(Vehicle vehicle);
         Task<bool> RemoveAsync(string licenseNo);
     }

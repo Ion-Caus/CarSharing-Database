@@ -46,6 +46,7 @@ namespace Database_EFC.Repositories.Impl
             try
             {
                 _dbContext.Update(customer);
+                _dbContext.Entry(customer.AccessLevel).State = EntityState.Unchanged;
                 await _dbContext.SaveChangesAsync();
                 Log.AddLog($"|Repositories/CustomerRepo.UpdateAsync| : Reply : {JsonSerializer.Serialize(customer)}");
                 return customer;

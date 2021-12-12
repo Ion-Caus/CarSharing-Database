@@ -1,6 +1,6 @@
 namespace CarSharing_Database_GraphQL.Mutations.Records.VehicleRecords
 {
-    public record VehicleInput(
+    public record UpdateVehicleInput(
         string LicenseNo,
         string Brand,
         string Model,
@@ -10,6 +10,7 @@ namespace CarSharing_Database_GraphQL.Mutations.Records.VehicleRecords
         int Seats,
         int ManufactureYear,
         double Mileage,
-        CustomerKey Owner
+        CustomerKey Owner,
+        bool IsApproved
     );
 }
