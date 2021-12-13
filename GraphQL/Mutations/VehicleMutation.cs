@@ -8,7 +8,7 @@ namespace CarSharing_Database_GraphQL.Mutations
 {
     public partial class Mutation
     {
-        public async Task<Vehicle> AddVehicle([Service] IVehicleRepo vehicleRepo, VehicleInput input)
+        public async Task<Vehicle> AddVehicle([Service] IVehicleRepo vehicleRepo, AddVehicleInput input)
         {
             var vehicle = new Vehicle
             {
@@ -29,7 +29,7 @@ namespace CarSharing_Database_GraphQL.Mutations
             return await vehicleRepo.AddAsync(vehicle);
         }
         
-        public async Task<Vehicle> UpdateVehicle([Service] IVehicleRepo vehicleRepo, VehicleInput input)
+        public async Task<Vehicle> UpdateVehicle([Service] IVehicleRepo vehicleRepo, UpdateVehicleInput input)
         {
             var vehicle = new Vehicle
             {
@@ -42,6 +42,7 @@ namespace CarSharing_Database_GraphQL.Mutations
                 Seats = input.Seats,
                 ManufactureYear = input.ManufactureYear,
                 Mileage = input.Mileage,
+                IsApproved = input.IsApproved,
                 Owner = new Customer
                 {
                     Cpr = input.Owner.Cpr

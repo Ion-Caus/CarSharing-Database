@@ -20,12 +20,15 @@ namespace Entity.ModelData
         
         [GraphQLIgnore]
         public bool IsDeleted { get; set; }
+        
+        // is approved by the admin
+        public bool IsApproved { get; set; }
     }
     
     public static class VehicleTransmission
     {
-        public const string Manual = "Manual transmission";
-        public const string Automatic = "Automatic transmission";
+        public const string Manual = "Manual";
+        public const string Automatic = "Automatic";
     }
 
     public static class VehicleType

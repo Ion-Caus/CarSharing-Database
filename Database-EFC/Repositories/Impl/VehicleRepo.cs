@@ -74,6 +74,23 @@ namespace Database_EFC.Repositories.Impl
                 throw new Exception($"Cannot retrieve the vehicles owned by the customer with cpr '{cpr}'");
             }
         }
+        
+        public async Task<List<Vehicle>> GetByApprovalStatusAsync(bool isApproved)
+        {
+            try
+            {
+                Log.AddLog($"|Repositories/VehicleRepo.GetByApprovalStatusAsync| : Request :  IsApproved:{isApproved}");
+                return await _dbContext.Vehicles
+                    .Include(vehicle => vehicle.Owner)
+                    .Where(vehicle => vehicle.IsApproved == isApproved)
+                    .ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Log.AddLog($"|Repositories/VehicleRepo.GetByApprovalStatusAsync| : Error : {e.Message}");
+                throw new Exception($"Cannot retrieve the vehicles with approved status of '{isApproved}'");
+            }
+        }
 
         public async Task<Vehicle> UpdateAsync(Vehicle vehicle)
         {
