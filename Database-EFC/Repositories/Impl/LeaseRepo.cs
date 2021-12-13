@@ -35,6 +35,7 @@ namespace Database_EFC.Repositories.Impl
             {
                 Log.AddLog($"|Repositories/LeaseRepo.GetAsync| : Request :  Id:{id}");
                 return await _dbContext.Leases
+                    .IgnoreQueryFilters()
                     .Include(lease => lease.Listing)
                     .Include(lease => lease.Customer)
                     .FirstAsync(lease => lease.Id == id);
@@ -52,6 +53,7 @@ namespace Database_EFC.Repositories.Impl
             {
                 Log.AddLog($"|Repositories/LeaseRepo.GetByListingAsync| : Request :  ListingId:{listingId}");
                 return await _dbContext.Leases
+                    .IgnoreQueryFilters()
                     .Include(lease => lease.Customer)
                     .Include(lease => lease.Listing)
                     .ThenInclude(listing => listing.Vehicle)
@@ -71,6 +73,7 @@ namespace Database_EFC.Repositories.Impl
             {
                 Log.AddLog($"|Repositories/LeaseRepo.GetByCustomerAsync| : Request :  Cpr:{cpr}");
                 return await _dbContext.Leases
+                    .IgnoreQueryFilters()
                     .Include(lease => lease.Customer)
                     .Include(lease => lease.Listing)
                     .ThenInclude(listing => listing.Vehicle)
