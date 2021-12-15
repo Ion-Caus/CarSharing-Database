@@ -56,6 +56,7 @@ namespace CarSharing_Database_GraphQL
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
             app
                 .UseRouting()
                 .UseEndpoints(endpoints =>
