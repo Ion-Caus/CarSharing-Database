@@ -8,6 +8,7 @@ namespace CarSharing_Database_GraphQL.Mutations
 {
     public partial class Mutation
     {
+        [GraphQLDescription("Add an account and associate it with a customer.")]
         public async Task<Account> AddAccount([Service] IAccountRepo accountRepo, AccountInput input)
         {
             var account = new Account

@@ -8,6 +8,7 @@ namespace CarSharing_Database_GraphQL.Mutations
 {
     public partial class Mutation
     {
+        [GraphQLDescription("Add a customer.")]
         public async Task<Customer> AddCustomer([Service] ICustomerRepo customerRepo, CustomerInput customer)
         {
             return await customerRepo.AddAsync(
@@ -22,6 +23,7 @@ namespace CarSharing_Database_GraphQL.Mutations
             );
         }
 
+        [GraphQLDescription("Update a customer by his cpr.")]
         public async Task<Customer> UpdateCustomer([Service] ICustomerRepo customerRepo, CustomerInput customer)
         {
             return await customerRepo.UpdateAsync(
@@ -36,6 +38,7 @@ namespace CarSharing_Database_GraphQL.Mutations
             );
         }
 
+        [GraphQLDescription("Remove a customer by his cpr.")]
         public async Task<bool> RemoveCustomer([Service] ICustomerRepo customerRepo, string cpr)
         {
             return await customerRepo.RemoveAsync(cpr);

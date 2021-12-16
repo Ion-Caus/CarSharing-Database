@@ -8,7 +8,7 @@ namespace CarSharing_Database_GraphQL.Queries
     // Queries for Accounts
     public partial class Query
     {
-        [GraphQLDescription("Get a account by username.")]
+        [GraphQLDescription("Get an account by username.")]
         public async Task<Account> GetAccount([Service] IAccountRepo accountRepo, string username)
         {
             return await accountRepo.GetAsync(username);

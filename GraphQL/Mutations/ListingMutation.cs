@@ -8,6 +8,7 @@ namespace CarSharing_Database_GraphQL.Mutations
 {
     public partial class Mutation
     {
+        [GraphQLDescription("Add a listing and associate it with a vehicle.")]
         public async Task<Listing> AddListing([Service] IListingRepo listingRepo, AddListingInput input)
         {
             var listing = new Listing
@@ -27,6 +28,7 @@ namespace CarSharing_Database_GraphQL.Mutations
 
         }
         
+        [GraphQLDescription("Update a listing by its id.")]
         public async Task<Listing> UpdateListing([Service] IListingRepo listingRepo, UpdateListingInput input)
         {
             var listing = new Listing
@@ -44,6 +46,7 @@ namespace CarSharing_Database_GraphQL.Mutations
             return await listingRepo.UpdateAsync(listing);
         }
         
+        [GraphQLDescription("Remove a listing by its id.")]
         public async Task<bool> RemoveListing([Service] IListingRepo listingRepo, int id)
         {
             return await listingRepo.RemoveAsync(id);
