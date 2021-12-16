@@ -10,13 +10,13 @@ namespace CarSharing_Database_GraphQL.Queries
     // Queries for Listings
     public partial class Query
     {
-        [GraphQLDescription("Get a list of listings by location, dateFrom and dateTo.")]
+        [GraphQLDescription("Get a list of listings by location, and the date-time 'from' and 'to'.")]
         public async Task<IList<Listing>> GetListing([Service] IListingRepo listingRepo, string location, DateTime dateFrom, DateTime dateTo)
         {
             return await listingRepo.GetAsync(location, dateFrom, dateTo);
         }
         
-        [GraphQLDescription("Get a list of listings by vehicle's licenseNo.")]
+        [GraphQLDescription("Get a list of listings by a specific vehicle's license number.")]
         public async Task<IList<Listing>> GetListingsByVehicle([Service] IListingRepo listingRepo, string licenseNo)
         {
             return await listingRepo.GetByVehicleAsync(licenseNo);
